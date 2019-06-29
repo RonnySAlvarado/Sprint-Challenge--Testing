@@ -4,6 +4,17 @@ const Games = require('./gamesModel');
 
 describe('The games model', () => {
 
+    describe('the getAll method', () => {
+        beforeEach( async () => {
+            await db('games').truncate();
+        })
+
+        it('it should get all games in the database', async () => {
+            const allGames = await Games.getAll();
+            expect(allGames).toEqual([]);
+        })
+    })
+
     describe('the insert method', () => {
 
         beforeEach( async () => {

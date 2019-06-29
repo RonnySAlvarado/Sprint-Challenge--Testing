@@ -14,3 +14,30 @@ describe('GET /games', () => {
         expect(res.type).toBe('application/json'); 
     })
 })
+
+describe('POST /games', () => {
+    beforeEach( async () => {
+        await db('games').truncate();
+    })
+
+    it('should return status 201', async () => {
+        const game = {
+            title: "Pacman",
+            genre: "Arcade",
+            releaseYear: 1980
+        }
+        const res = await request(server).post('/games').send(game);
+        expect(res.status).toBe(201);
+        expect(res.type).toBe('application/json'); 
+    })
+
+    it('should return status 422', async () => {
+        const incompleteGame = {
+            title: "Pacman",
+            genre: "",
+            releaseYear: 1980
+        }
+        const res = await request(server).post('/games').send(incompleteGame);
+        expect(res.status).toBe(422);
+    })
+})
